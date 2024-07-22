@@ -1,0 +1,26 @@
+﻿@page "/products"
+
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using CRUDInBlazor.Models
+@inject IDbContextFactory<CRUDInBlazor.Data.MyAppDbContext> DbFactory
+
+<PageTitle>Produtos</PageTitle>
+
+<h1>Zenkai - Produtos</h1>
+
+<p>
+    <a href="products/create" class="btn btn-primary">Criar Produto</a>
+</p>
+
+<QuickGrid Class="table" Items="DbFactory.CreateDbContext().Product">
+    <PropertyColumn Property="product => product.Name" />
+    <PropertyColumn Property="product => product.Price" />
+    <PropertyColumn Property="product => product.Qty" />
+
+    <TemplateColumn Context="product">
+        <a href="@($"products/edit?id={product.Id}")" class="btn btn-primary">Editar</a> |
+        <a href="@($"products/details?id={product.Id}")" class="btn btn-success">Detalhes</a> |
+        <a href="@($"products/delete?id={product.Id}")" class="btn btn-danger">Deletar</a>
+    </TemplateColumn>
+</QuickGrid>
